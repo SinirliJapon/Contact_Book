@@ -1,6 +1,7 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/repository/contactBook.dart';
 import 'package:flutter/material.dart';
+import '../widgets.dart';
 
 class AddNewContactScreen extends StatefulWidget {
   const AddNewContactScreen({super.key});
@@ -46,31 +47,32 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
           children: [
             TextField(
               controller: nameController,
-              // decoration: kTextFieldDecoration.copyWith(
-              //     hintText: "Enter contact's name"),
+              decoration: kTextFieldDecoration.copyWith(
+                  hintText: "Enter contact's name"),
             ),
             const SizedBox(
               height: 8.0,
             ),
             TextField(
               controller: ageController,
-              // decoration: kTextFieldDecoration.copyWith(
-              //   hintText: "Enter contact's age ...",
-              // ),
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: "Enter contact's age ...",
+              ),
             ),
             const SizedBox(
               height: 8.0,
             ),
             TextField(
               controller: phoneNumberController,
-              // decoration: kTextFieldDecoration.copyWith(
-              //   hintText: "Enter contact's phone number ...",
-              // ),
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: "Enter contact's phone number ...",
+              ),
             ),
             const SizedBox(
               height: 24.0,
             ),
             TextButton(
+              style: kTextButtonStyle(),
               onPressed: () {
                 ContactBook().add(
                     name: nameController.text,
@@ -78,7 +80,12 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
                     phoneNumber: phoneNumberController.text);
                 Navigator.of(context).pop();
               },
-              child: const Text('Add Contact'),
+              child: const Text(
+                'Add Contact',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

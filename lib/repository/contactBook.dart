@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:contactbook/model/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';

@@ -1,5 +1,6 @@
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contactBook.dart';
+import 'package:contactbook/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 

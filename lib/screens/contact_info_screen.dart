@@ -2,6 +2,8 @@ import 'package:contactbook/model/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../widgets.dart';
+
 class ContactInfoScreen extends StatefulWidget {
   const ContactInfoScreen({super.key});
 
@@ -24,14 +26,44 @@ class _ContactInfoScreenState extends State<ContactInfoScreen> {
             itemCount: contacts.length,
             itemBuilder: (context, index) {
               final contact = contacts[index];
-              return Column(
-                children: [
-                  Text(
-                    contact.name,
-                  ),
-                  Text(contact.age),
-                  Text(contact.phoneNumber),
-                ],
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      decoration: kBoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          contact.name,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      decoration: kBoxDecoration(),
+                      child: Center(
+                        child: Text(contact.age),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      decoration: kBoxDecoration(),
+                      child: Center(
+                        child: Text(contact.phoneNumber),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
           );
