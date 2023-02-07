@@ -5,7 +5,7 @@ import '../widgets.dart';
 
 class AddNewContactScreen extends StatefulWidget {
   const AddNewContactScreen({super.key});
-  static const name = '/add-new-contact';
+  static String id = 'add_contact_screen';
 
   @override
   State<AddNewContactScreen> createState() => _AddNewContactScreenState();

@@ -1,6 +1,5 @@
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
-import 'screens/contact_info_screen.dart';
 import 'package:contactbook/screens/home_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(),
       routes: {
-        '/new-contact': (context) => const AddNewContactScreen(),
-        '/contact-info': (context) => const ContactInfoScreen(),
+        AddNewContactScreen.id: (context) => const AddNewContactScreen(),
       },
     );
   }

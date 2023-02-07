@@ -1,11 +1,13 @@
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contactBook.dart';
-import 'package:contactbook/widgets.dart';
+import 'package:contactbook/screens/add_new_contact_screen.dart';
+import 'package:contactbook/screens/contact_info_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+  static String id = 'home_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,14 @@ class HomePage extends StatelessWidget {
                   elevation: 6.0,
                   child: TextButton(
                     onPressed: () async {
-                      await Navigator.of(context).pushNamed('/contact-info');
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactInfoScreen(
+                            currentContact: contact,
+                          ),
+                        ),
+                      );
                     },
                     child: ListTile(
                       title: Text(contact.name),
@@ -61,7 +70,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await Navigator.of(context).pushNamed('/new-contact');
+          await Navigator.of(context).pushNamed(AddNewContactScreen.id);
         },
         child: const Icon(Icons.add),
       ),

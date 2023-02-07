@@ -25,3 +25,13 @@ BoxDecoration kBoxDecoration() {
     ),
   );
 }
+
+BoxDecoration kContactInfoBoxDecoration() {
+  return BoxDecoration(
+    color: Colors.teal,
+    borderRadius: const BorderRadius.all(
+      Radius.circular(32.0),
+    ),
+    border: Border.all(width: 1, color: Colors.teal),
+  );
+}
