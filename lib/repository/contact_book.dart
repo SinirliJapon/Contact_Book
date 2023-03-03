@@ -7,10 +7,11 @@ class ContactBook extends ChangeNotifier {
   static Box<Contact> contactsBox = Hive.box<Contact>(contactBoxName);
   var uuid = const Uuid();
 
-  void add(
-      {required String name,
-      required String age,
-      required String phoneNumber}) {
+  void add({
+    required String name,
+    required String age,
+    required String phoneNumber,
+  }) {
     var newId = uuid.v4();
     contactsBox.put(
         newId,

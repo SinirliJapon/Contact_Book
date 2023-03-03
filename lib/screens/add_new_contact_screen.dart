@@ -1,6 +1,8 @@
 import 'package:contactbook/constants.dart';
-import 'package:contactbook/repository/contactBook.dart';
+import 'package:contactbook/repository/contact_book.dart';
+import 'package:fast_contacts/fast_contacts.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../widgets.dart';
 
 class AddNewContactScreen extends StatefulWidget {
@@ -33,6 +35,17 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
     super.dispose();
   }
 
+  Future<List<Contact>> getContacts() async {
+    bool isGranted = await Permission.contacts.status.isGranted;
+    if (!isGranted) {
+      await Permission.contacts.request().isGranted;
+    }
+    if (isGranted) {
+      return await FastContacts.allContacts;
+    }
+    return [];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,39 +58,38 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            contactField(
               controller: nameController,
-              decoration: kTextFieldDecoration.copyWith(
-                  hintText: "Enter contact's name"),
+              decoration: kTextFieldDecoration,
+              hintText: "Enter contact's name ...",
             ),
             const SizedBox(
               height: 8.0,
             ),
-            TextField(
+            contactField(
               controller: ageController,
-              decoration: kTextFieldDecoration.copyWith(
-                hintText: "Enter contact's age ...",
-              ),
+              decoration: kTextFieldDecoration,
+              hintText: "Enter contact's age ...",
             ),
             const SizedBox(
               height: 8.0,
             ),
-            TextField(
+            contactField(
               controller: phoneNumberController,
-              decoration: kTextFieldDecoration.copyWith(
-                hintText: "Enter contact's phone number ...",
-              ),
+              decoration: kTextFieldDecoration,
+              hintText: "Enter contact's phone number ...",
             ),
             const SizedBox(
-              height: 24.0,
+              height: 24,
             ),
             TextButton(
               style: kTextButtonStyle(),
               onPressed: () {
                 ContactBook().add(
-                    name: nameController.text,
-                    age: ageController.text,
-                    phoneNumber: phoneNumberController.text);
+                  name: nameController.text,
+                  age: ageController.text,
+                  phoneNumber: phoneNumberController.text,
+                );
                 Navigator.of(context).pop();
               },
               child: const Text(

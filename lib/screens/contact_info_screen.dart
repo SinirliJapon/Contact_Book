@@ -1,5 +1,6 @@
 import 'package:contactbook/model/contact.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import '../widgets.dart';
 
 class ContactInfoScreen extends StatelessWidget {
@@ -17,51 +18,29 @@ class ContactInfoScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                decoration: kContactInfoBoxDecoration(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20.0),
-                  child: Center(
-                      child: Text(
-                    currentContact.name,
-                    style: const TextStyle(color: Colors.white),
-                  )),
-                ),
+              const SizedBox(
+                height: 24.0,
+              ),
+              // ignore: prefer_const_constructors
+              ProfilePicture(
+                name: currentContact.name,
+                radius: 50,
+                fontsize: 20,
               ),
               const SizedBox(
                 height: 8.0,
               ),
-              Container(
-                decoration: kContactInfoBoxDecoration(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20.0),
-                  child: Center(
-                      child: Text(
-                    currentContact.age,
-                    style: const TextStyle(color: Colors.white),
-                  )),
-                ),
-              ),
+              contactContainer(info: currentContact.name),
               const SizedBox(
                 height: 8.0,
               ),
-              Container(
-                decoration: kContactInfoBoxDecoration(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 20.0),
-                  child: Center(
-                      child: Text(
-                    currentContact.phoneNumber,
-                    style: const TextStyle(color: Colors.white),
-                  )),
-                ),
+              contactContainer(info: currentContact.age),
+              const SizedBox(
+                height: 8.0,
               ),
+              contactContainer(info: currentContact.phoneNumber),
             ],
           ),
         ),

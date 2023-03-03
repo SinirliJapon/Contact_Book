@@ -1,13 +1,15 @@
+import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
-import 'package:contactbook/repository/contactBook.dart';
+import 'package:contactbook/repository/contact_book.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_info_screen.dart';
+import 'package:contactbook/widgets.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  static String id = 'home_screen';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,7 +22,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact Book'),
+        title: const Center(
+          child: Text('Contact Book'),
+        ),
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Contact>('contacts').listenable(),
@@ -28,21 +32,6 @@ class _HomePageState extends State<HomePage> {
           final contacts = value.values.toList();
           return Column(
             children: [
-              TextButton.icon(
-                // ignore: prefer_const_constructors
-                icon: RotatedBox(
-                  quarterTurns: 1,
-                  child: const Icon(
-                    Icons.compare_arrows,
-                    size: 28,
-                  ),
-                ),
-                label: Text(
-                  isDescending ? 'Descending' : 'Ascending',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                onPressed: () => setState(() => isDescending = !isDescending),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: contacts.length,
@@ -57,22 +46,13 @@ class _HomePageState extends State<HomePage> {
                       onDismissed: (direction) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("contact deleted"),
+                            content: Text("Contact Deleted..."),
                           ),
                         );
                         ContactBook().remove(id: contact.id);
                       },
                       key: ValueKey(contact.id),
-                      background: Container(
-                        color: Colors.red,
-                        child: const Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      background: kDismissibleContainer,
                       child: Material(
                         color: Colors.white,
                         elevation: 6.0,
@@ -88,6 +68,11 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                           child: ListTile(
+                            leading: ProfilePicture(
+                              name: contact.name,
+                              radius: 20,
+                              fontsize: 10,
+                            ),
                             title: Text(contact.name),
                           ),
                         ),
@@ -100,12 +85,30 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await Navigator.of(context).pushNamed(AddNewContactScreen.id);
-        },
-        child: const Icon(Icons.add),
-      ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(
+          icon: IconButton(
+            onPressed: () => setState(() => isDescending = !isDescending),
+            icon: const RotatedBox(
+              quarterTurns: 1,
+              child: Icon(
+                Icons.compare_arrows,
+                size: 28,
+              ),
+            ),
+          ),
+          label: isDescending ? 'Descending' : 'Ascending',
+        ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            onPressed: () async {
+              await Navigator.of(context).pushNamed(AddNewContactScreen.id);
+            },
+            icon: const Icon(Icons.add),
+          ),
+          label: 'Add',
+        ),
+      ]),
     );
   }
 }
