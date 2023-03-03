@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const kBackgroundColor = Color(0xFF1A1A1A);
+const kPrimaryColor = Colors.teal;
+
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a new contact name here...',
   hintStyle: TextStyle(color: Colors.black54),
@@ -8,11 +11,11 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.teal, width: 1.0),
+    borderSide: BorderSide(color: kPrimaryColor, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.teal, width: 2.0),
+    borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
