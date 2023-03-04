@@ -39,6 +39,8 @@ dependencies:
   permission_handler: ^10.2.0
   cross_file_image: ^1.0.0
   flutter_profile_picture: ^2.0.0
+  google_nav_bar: ^5.0.6
+  favorite_button: ^0.0.4
 
 dev_dependencies:
   build_runner: ^2.3.2

@@ -1,15 +1,20 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contact_book.dart';
+import 'package:contactbook/repository/favorites.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_info_screen.dart';
+import 'package:contactbook/screens/favorite_screen.dart';
 import 'package:contactbook/widgets.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+  static String id = 'home_screen';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,14 +22,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDescending = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Contact Book'),
-        ),
+        title: const Text('Contact Book'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Navigator.of(context).pushNamed(AddNewContactScreen.id);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Contact>('contacts').listenable(),
@@ -41,39 +51,50 @@ class _HomePageState extends State<HomePage> {
                           ? contact2.name.compareTo(contact1.name)
                           : contact1.name.compareTo(contact2.name));
                     final contact = sortedContacts[index];
-                    return Dismissible(
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Contact Deleted..."),
-                          ),
-                        );
-                        ContactBook().remove(id: contact.id);
-                      },
-                      key: ValueKey(contact.id),
-                      background: kDismissibleContainer,
-                      child: Material(
-                        color: Colors.white,
-                        elevation: 6.0,
-                        child: TextButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ContactInfoScreen(
-                                  currentContact: contact,
-                                ),
-                              ),
-                            );
-                          },
-                          child: ListTile(
-                            leading: ProfilePicture(
-                              name: contact.name,
-                              radius: 20,
-                              fontsize: 10,
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Dismissible(
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Contact Deleted..."),
                             ),
-                            title: Text(contact.name),
+                          );
+                          ContactBook().remove(id: contact.id);
+                        },
+                        key: ValueKey(contact.id),
+                        background: kDismissibleContainer,
+                        child: Material(
+                          color: Colors.white,
+                          elevation: 6.0,
+                          child: TextButton(
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ContactInfoScreen(
+                                    currentContact: contact,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: ListTile(
+                              leading: ProfilePicture(
+                                name: contact.name,
+                                radius: 25,
+                                fontsize: 15,
+                              ),
+                              title: Text(contact.name),
+                              trailing: FavoriteButton(
+                                valueChanged: (isFavorite) {
+                                  Favorites().add(
+                                      name: contact.name,
+                                      age: contact.age,
+                                      phoneNumber: contact.phoneNumber);
+                                },
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -85,30 +106,39 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-          icon: IconButton(
-            onPressed: () => setState(() => isDescending = !isDescending),
-            icon: const RotatedBox(
-              quarterTurns: 1,
-              child: Icon(
-                Icons.compare_arrows,
-                size: 28,
-              ),
-            ),
-          ),
-          label: isDescending ? 'Descending' : 'Ascending',
-        ),
-        BottomNavigationBarItem(
-          icon: IconButton(
-            onPressed: () async {
-              await Navigator.of(context).pushNamed(AddNewContactScreen.id);
+      bottomNavigationBar: Container(
+        color: kBackgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: GNav(
+            backgroundColor: kBackgroundColor,
+            color: kPrimaryColor,
+            activeColor: Colors.white,
+            tabBackgroundColor: Colors.grey.shade800,
+            gap: 8,
+            padding: const EdgeInsets.all(16),
+            onTabChange: (index) {
+              HomePage.id;
+              FavoriteScreen.id;
             },
-            icon: const Icon(Icons.add),
+            tabs: [
+              const GButton(
+                icon: Icons.home,
+                text: 'Home',
+              ),
+              const GButton(
+                icon: Icons.favorite_border,
+                text: 'Likes',
+              ),
+              GButton(
+                icon: Icons.compare_arrows,
+                text: isDescending ? 'Descending' : 'Ascending',
+                onPressed: () => setState(() => isDescending = !isDescending),
+              ),
+            ],
           ),
-          label: 'Add',
         ),
-      ]),
+      ),
     );
   }
 }

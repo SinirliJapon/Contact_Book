@@ -49,15 +49,26 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add a new contact'),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(
+              height: 50,
+            ),
+            const Text(
+              'Add a new Contact',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: kPrimaryColor,
+              ),
+            ),
+            const SizedBox(
+              height: 24,
+            ),
             contactField(
               controller: nameController,
               decoration: kTextFieldDecoration,
@@ -95,6 +106,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
               child: const Text(
                 'Add Contact',
                 style: TextStyle(
+                  fontSize: 18,
                   color: Colors.white,
                 ),
               ),
