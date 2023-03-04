@@ -27,16 +27,6 @@ BoxDecoration kBoxDecoration() {
   );
 }
 
-BoxDecoration kContactInfoBoxDecoration() {
-  return BoxDecoration(
-    color: Colors.teal,
-    borderRadius: const BorderRadius.all(
-      Radius.circular(10.0),
-    ),
-    border: Border.all(width: 1, color: Colors.teal),
-  );
-}
-
 Widget buildButton({
   required String title,
   required IconData icon,
@@ -73,27 +63,35 @@ TextField contactField({
   required TextEditingController controller,
   required InputDecoration decoration,
   required String hintText,
+  required Widget prefixIcon,
 }) =>
     TextField(
+      cursorColor: kPrimaryColor,
+      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
+        prefixIcon: prefixIcon,
+        prefixIconColor: kPrimaryColor,
       ),
       controller: controller,
     );
 
-Container contactContainer({
+FloatingActionButton contactButton({
   required String info,
+  required Icon icon,
 }) =>
-    Container(
-      decoration: kContactInfoBoxDecoration(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: Center(
-            child: Text(
-          info,
-          style: const TextStyle(color: Colors.white),
-        )),
+    FloatingActionButton.extended(
+      heroTag: null,
+      onPressed: () {},
+      icon: icon,
+      label: Text(
+        info,
+        textAlign: TextAlign.start,
       ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      backgroundColor: kPrimaryColor,
     );
 
 Container kDismissibleContainer = Container(
