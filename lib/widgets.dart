@@ -67,7 +67,7 @@ TextField contactField({
 }) =>
     TextField(
       cursorColor: kPrimaryColor,
-      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      style: const TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
       decoration: kTextFieldDecoration.copyWith(
         hintText: hintText,
         prefixIcon: prefixIcon,

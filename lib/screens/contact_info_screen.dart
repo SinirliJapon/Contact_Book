@@ -1,3 +1,4 @@
+import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
@@ -11,9 +12,7 @@ class ContactInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Contact's info"),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(
@@ -21,26 +20,43 @@ class ContactInfoScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(
-                height: 24.0,
+                height: 50.0,
               ),
               // ignore: prefer_const_constructors
               ProfilePicture(
                 name: currentContact.name,
                 radius: 50,
-                fontsize: 20,
+                fontsize: 30,
               ),
+              const SizedBox(
+                height: 50,
+              ),
+              const Center(
+                child: Text(
+                  'Contact Info',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              contactButton(
+                  info: currentContact.name, icon: const Icon(Icons.person)),
               const SizedBox(
                 height: 8.0,
               ),
-              contactContainer(info: currentContact.name),
+              contactButton(
+                  info: currentContact.age, icon: const Icon(Icons.numbers)),
               const SizedBox(
                 height: 8.0,
               ),
-              contactContainer(info: currentContact.age),
-              const SizedBox(
-                height: 8.0,
-              ),
-              contactContainer(info: currentContact.phoneNumber),
+              contactButton(
+                  info: currentContact.phoneNumber,
+                  icon: const Icon(Icons.phone)),
             ],
           ),
         ),

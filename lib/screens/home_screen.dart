@@ -1,15 +1,13 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contact_book.dart';
-import 'package:contactbook/repository/favorites.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_info_screen.dart';
-import 'package:contactbook/screens/favorite_screen.dart';
 import 'package:contactbook/widgets.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,9 +20,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDescending = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white70,
       appBar: AppBar(
         title: const Text('Contact Book'),
         actions: [
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: ValueListenableBuilder(
-        valueListenable: Hive.box<Contact>('contacts').listenable(),
+        valueListenable: Hive.box<Contact>(contactBoxName).listenable(),
         builder: (context, value, child) {
           final contacts = value.values.toList();
           return Column(
@@ -66,6 +66,8 @@ class _HomePageState extends State<HomePage> {
                         key: ValueKey(contact.id),
                         background: kDismissibleContainer,
                         child: Material(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                           color: Colors.white,
                           elevation: 6.0,
                           child: TextButton(
@@ -87,13 +89,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               title: Text(contact.name),
                               trailing: FavoriteButton(
-                                valueChanged: (isFavorite) {
-                                  Favorites().add(
-                                      name: contact.name,
-                                      age: contact.age,
-                                      phoneNumber: contact.phoneNumber);
-                                },
-                              ),
+                                  iconSize: 40, valueChanged: (isFavorite) {}),
                             ),
                           ),
                         ),
@@ -107,20 +103,16 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       bottomNavigationBar: Container(
-        color: kBackgroundColor,
+        color: kPrimaryColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: GNav(
-            backgroundColor: kBackgroundColor,
-            color: kPrimaryColor,
+            backgroundColor: kPrimaryColor,
+            color: Colors.white,
             activeColor: Colors.white,
-            tabBackgroundColor: Colors.grey.shade800,
+            tabBackgroundColor: kPrimaryColor.shade700,
             gap: 8,
             padding: const EdgeInsets.all(16),
-            onTabChange: (index) {
-              HomePage.id;
-              FavoriteScreen.id;
-            },
             tabs: [
               const GButton(
                 icon: Icons.home,

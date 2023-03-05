@@ -18,6 +18,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
   late final TextEditingController ageController;
   late final TextEditingController phoneNumberController;
   final ContactBook contactBook = ContactBook();
+  final String name = " ";
 
   @override
   void initState() {
@@ -49,69 +50,93 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            const Text(
-              'Add a new Contact',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: kPrimaryColor,
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            contactField(
-              controller: nameController,
-              decoration: kTextFieldDecoration,
-              hintText: "Enter contact's name ...",
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            contactField(
-              controller: ageController,
-              decoration: kTextFieldDecoration,
-              hintText: "Enter contact's age ...",
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            contactField(
-              controller: phoneNumberController,
-              decoration: kTextFieldDecoration,
-              hintText: "Enter contact's phone number ...",
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            TextButton(
-              style: kTextButtonStyle(),
-              onPressed: () {
-                ContactBook().add(
-                  name: nameController.text,
-                  age: ageController.text,
-                  phoneNumber: phoneNumberController.text,
-                );
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                'Add Contact',
-                style: TextStyle(
-                  fontSize: 18,
+              const CircleAvatar(
+                radius: 50,
+                backgroundColor: kPrimaryColor,
+                child: Icon(
+                  Icons.person_2_outlined,
+                  size: 40,
                   color: Colors.white,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 50,
+              ),
+              const Center(
+                child: Text(
+                  'Add a new Contact',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              contactField(
+                controller: nameController,
+                decoration: kTextFieldDecoration,
+                hintText: "Enter contact's name ...",
+                prefixIcon: const Icon(Icons.person),
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              contactField(
+                controller: ageController,
+                decoration: kTextFieldDecoration,
+                hintText: "Enter contact's age ...",
+                prefixIcon: const Icon(Icons.numbers),
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+              contactField(
+                controller: phoneNumberController,
+                decoration: kTextFieldDecoration,
+                hintText: "Enter contact's phone number ...",
+                prefixIcon: const Icon(Icons.phone),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextButton(
+                style: kTextButtonStyle(),
+                onPressed: () {
+                  ContactBook().add(
+                    name: nameController.text,
+                    age: ageController.text,
+                    phoneNumber: phoneNumberController.text,
+                  );
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Add Contact',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 8.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
