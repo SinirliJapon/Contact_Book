@@ -3,6 +3,7 @@ import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contact_book.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_info_screen.dart';
+import 'package:contactbook/screens/favorite_screen.dart';
 import 'package:contactbook/widgets.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDescending = false;
+  List<Contact> favoriteList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,11 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.add),
           ),
+          IconButton(
+              onPressed: () async {
+                await Navigator.of(context).pushNamed(FavoriteScreen.id);
+              },
+              icon: const Icon(Icons.favorite_border))
         ],
       ),
       body: ValueListenableBuilder(
@@ -89,7 +96,28 @@ class _HomePageState extends State<HomePage> {
                               ),
                               title: Text(contact.name),
                               trailing: FavoriteButton(
-                                  iconSize: 40, valueChanged: (isFavorite) {}),
+                                  iconSize: 40,
+                                  valueChanged: (isFavorite) {
+                                    if (isFavorite) {
+                                      favoriteList.add(contact);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              "Contact added to Favorites..."),
+                                        ),
+                                      );
+                                    } else {
+                                      favoriteList.remove(contact);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              "Contact removed from Favorites..."),
+                                        ),
+                                      );
+                                    }
+                                  }),
                             ),
                           ),
                         ),
@@ -113,14 +141,18 @@ class _HomePageState extends State<HomePage> {
             tabBackgroundColor: kPrimaryColor.shade700,
             gap: 8,
             padding: const EdgeInsets.all(16),
+            onTabChange: (index) {
+              HomePage.id;
+              const FavoriteScreen();
+            },
             tabs: [
               const GButton(
                 icon: Icons.home,
                 text: 'Home',
               ),
               const GButton(
-                icon: Icons.favorite_border,
-                text: 'Likes',
+                icon: Icons.favorite,
+                text: 'Favorites',
               ),
               GButton(
                 icon: Icons.compare_arrows,
