@@ -4,7 +4,6 @@ import 'package:uuid/uuid.dart';
 part 'contact.g.dart';
 
 const String contactBoxName = 'contacts';
-const String favoriteBoxName = 'favorites';
 const Uuid uuid = Uuid();
 
 @HiveType(typeId: 0)

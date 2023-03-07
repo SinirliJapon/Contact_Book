@@ -44,17 +44,17 @@ class ContactInfoScreen extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              contactButton(
+              contactTile(
                   info: currentContact.name, icon: const Icon(Icons.person)),
               const SizedBox(
                 height: 8.0,
               ),
-              contactButton(
+              contactTile(
                   info: currentContact.age, icon: const Icon(Icons.numbers)),
               const SizedBox(
                 height: 8.0,
               ),
-              contactButton(
+              contactTile(
                   info: currentContact.phoneNumber,
                   icon: const Icon(Icons.phone)),
             ],

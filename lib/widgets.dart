@@ -76,22 +76,22 @@ TextField contactField({
       controller: controller,
     );
 
-FloatingActionButton contactButton({
+ListTile contactTile({
   required String info,
   required Icon icon,
 }) =>
-    FloatingActionButton.extended(
-      heroTag: null,
-      onPressed: () {},
-      icon: icon,
-      label: Text(
+    ListTile(
+      leading: icon,
+      title: Text(
         info,
-        textAlign: TextAlign.start,
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      backgroundColor: kPrimaryColor,
+      tileColor: kPrimaryColor,
+      textColor: Colors.white,
+      iconColor: Colors.white,
     );
 
 Container kDismissibleContainer = Container(

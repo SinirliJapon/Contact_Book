@@ -11,7 +11,6 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<Contact>(ContactAdapter());
   await Hive.openBox<Contact>(contactBoxName);
-  await Hive.openBox<Contact>(favoriteBoxName);
   runApp(const MyApp());
 }
 

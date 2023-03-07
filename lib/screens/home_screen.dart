@@ -21,7 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDescending = false;
-  List<Contact> favoriteList = [];
+  bool isFavorite = false;
+  bool isFavoriteChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,28 +97,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                               title: Text(contact.name),
                               trailing: FavoriteButton(
-                                  iconSize: 40,
-                                  valueChanged: (isFavorite) {
-                                    if (isFavorite) {
-                                      favoriteList.add(contact);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              "Contact added to Favorites..."),
-                                        ),
-                                      );
-                                    } else {
-                                      favoriteList.remove(contact);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              "Contact removed from Favorites..."),
-                                        ),
-                                      );
-                                    }
-                                  }),
+                                iconSize: 40,
+                                valueChanged: (isFavorite) {
+                                  setState(() {
+                                    isFavoriteChecked:
+                                    !isFavoriteChecked;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
