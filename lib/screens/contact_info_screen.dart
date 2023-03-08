@@ -57,6 +57,14 @@ class ContactInfoScreen extends StatelessWidget {
               contactTile(
                   info: currentContact.phoneNumber,
                   icon: const Icon(Icons.phone)),
+              const SizedBox(
+                height: 8.0,
+              ),
+              contactTile(
+                  info: currentContact.isFavorite
+                      ? 'Favorite Contact'
+                      : 'Non Favorite Contact',
+                  icon: const Icon(Icons.favorite)),
             ],
           ),
         ),

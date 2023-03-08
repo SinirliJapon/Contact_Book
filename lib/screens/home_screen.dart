@@ -128,12 +128,13 @@ class _HomePageState extends State<HomePage> {
             text: 'Home',
           ),
           GButton(
-            icon: Icons.compare_arrows,
+            icon: isDescending ? Icons.arrow_downward : Icons.arrow_upward,
             text: isDescending ? 'Descending' : 'Ascending',
             onPressed: () => setState(() => isDescending = !isDescending),
           ),
           GButton(
             icon: Icons.favorite,
+            iconActiveColor: isFavoriteChecked ? Colors.red : Colors.white,
             text: isFavoriteChecked ? 'Favorites' : 'All Contacts',
             onPressed: () =>
                 setState(() => isFavoriteChecked = !isFavoriteChecked),
