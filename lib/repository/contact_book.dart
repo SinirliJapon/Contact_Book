@@ -11,6 +11,7 @@ class ContactBook extends ChangeNotifier {
     required String name,
     required String age,
     required String phoneNumber,
+    bool isFavorite = false,
   }) {
     var newId = uuid.v4();
     contactsBox.put(
@@ -20,10 +21,21 @@ class ContactBook extends ChangeNotifier {
           name: name,
           age: age,
           phoneNumber: phoneNumber,
+          isFavorite: isFavorite,
         ));
   }
 
   void remove({required String id}) {
     contactsBox.delete(id);
+  }
+
+  Future<void> update(Contact updatedContact) async {
+    final index = contactsBox.values
+        .toList()
+        .indexWhere((contact) => contact.id == updatedContact.id);
+    if (index == -1) {
+      throw Exception('Contact not found');
+    }
+    await contactsBox.putAt(index, updatedContact);
   }
 }

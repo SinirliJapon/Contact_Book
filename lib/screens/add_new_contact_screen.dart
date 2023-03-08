@@ -121,6 +121,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
                     name: nameController.text,
                     age: ageController.text,
                     phoneNumber: phoneNumberController.text,
+                    isFavorite: false,
                   );
                   Navigator.of(context).pop();
                 },

@@ -16,11 +16,14 @@ class Contact {
   final String age;
   @HiveField(3)
   final String phoneNumber;
+  @HiveField(4)
+  bool isFavorite;
 
   Contact({
     required this.id,
     required this.name,
     required this.age,
     required this.phoneNumber,
+    this.isFavorite = false,
   });
 }

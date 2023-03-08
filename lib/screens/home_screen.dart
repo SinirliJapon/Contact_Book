@@ -3,7 +3,6 @@ import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contact_book.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_info_screen.dart';
-import 'package:contactbook/screens/favorite_screen.dart';
 import 'package:contactbook/widgets.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
@@ -21,8 +20,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDescending = false;
-  bool isFavorite = false;
   bool isFavoriteChecked = false;
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +36,26 @@ class _HomePageState extends State<HomePage> {
             },
             icon: const Icon(Icons.add),
           ),
-          IconButton(
-              onPressed: () async {
-                await Navigator.of(context).pushNamed(FavoriteScreen.id);
-              },
-              icon: const Icon(Icons.favorite_border))
         ],
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Contact>(contactBoxName).listenable(),
         builder: (context, value, child) {
           final contacts = value.values.toList();
+          final sortedContacts = contacts
+            ..sort((contact1, contact2) => isDescending
+                ? contact2.name.compareTo(contact1.name)
+                : contact1.name.compareTo(contact2.name));
+          final filteredContacts = isFavoriteChecked
+              ? sortedContacts.where((contact) => contact.isFavorite).toList()
+              : sortedContacts;
           return Column(
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: contacts.length,
+                  itemCount: filteredContacts.length,
                   itemBuilder: (context, index) {
-                    final sortedContacts = contacts
-                      ..sort((contact1, contact2) => isDescending
-                          ? contact2.name.compareTo(contact1.name)
-                          : contact1.name.compareTo(contact2.name));
-                    final contact = sortedContacts[index];
+                    final contact = filteredContacts[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Dismissible(
@@ -98,11 +95,12 @@ class _HomePageState extends State<HomePage> {
                               title: Text(contact.name),
                               trailing: FavoriteButton(
                                 iconSize: 40,
+                                isFavorite: contact.isFavorite,
                                 valueChanged: (isFavorite) {
                                   setState(() {
-                                    isFavoriteChecked:
-                                    !isFavoriteChecked;
+                                    contact.isFavorite = isFavorite;
                                   });
+                                  ContactBook().update(contact);
                                 },
                               ),
                             ),
@@ -117,38 +115,30 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      bottomNavigationBar: Container(
-        color: kPrimaryColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: GNav(
-            backgroundColor: kPrimaryColor,
-            color: Colors.white,
-            activeColor: Colors.white,
-            tabBackgroundColor: kPrimaryColor.shade700,
-            gap: 8,
-            padding: const EdgeInsets.all(16),
-            onTabChange: (index) {
-              HomePage.id;
-              const FavoriteScreen();
-            },
-            tabs: [
-              const GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              const GButton(
-                icon: Icons.favorite,
-                text: 'Favorites',
-              ),
-              GButton(
-                icon: Icons.compare_arrows,
-                text: isDescending ? 'Descending' : 'Ascending',
-                onPressed: () => setState(() => isDescending = !isDescending),
-              ),
-            ],
+      bottomNavigationBar: GNav(
+        backgroundColor: kPrimaryColor,
+        color: Colors.white,
+        activeColor: Colors.white,
+        tabBackgroundColor: kPrimaryColor.shade700,
+        gap: 8,
+        padding: const EdgeInsets.all(16),
+        tabs: [
+          const GButton(
+            icon: Icons.home,
+            text: 'Home',
           ),
-        ),
+          GButton(
+            icon: Icons.compare_arrows,
+            text: isDescending ? 'Descending' : 'Ascending',
+            onPressed: () => setState(() => isDescending = !isDescending),
+          ),
+          GButton(
+            icon: Icons.favorite,
+            text: isFavoriteChecked ? 'Favorites' : 'All Contacts',
+            onPressed: () =>
+                setState(() => isFavoriteChecked = !isFavoriteChecked),
+          ),
+        ],
       ),
     );
   }
