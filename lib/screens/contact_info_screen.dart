@@ -64,7 +64,11 @@ class ContactInfoScreen extends StatelessWidget {
                   info: currentContact.isFavorite
                       ? 'Favorite Contact'
                       : 'Non Favorite Contact',
-                  icon: const Icon(Icons.favorite)),
+                  icon: Icon(
+                    Icons.favorite,
+                    color:
+                        currentContact.isFavorite ? Colors.red : Colors.white,
+                  )),
             ],
           ),
         ),

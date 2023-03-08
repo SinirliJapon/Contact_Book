@@ -38,4 +38,27 @@ class ContactBook extends ChangeNotifier {
     }
     await contactsBox.putAt(index, updatedContact);
   }
+
+  void editContact({
+    required String id,
+    String? name,
+    String? age,
+    String? phoneNumber,
+    bool? isFavorite,
+  }) {
+    final contact = contactsBox.get(id);
+    if (contact == null) {
+      throw Exception('Contact not found');
+    }
+
+    final updatedContact = Contact(
+      id: contact.id,
+      name: name ?? contact.name,
+      age: age ?? contact.age,
+      phoneNumber: phoneNumber ?? contact.phoneNumber,
+      isFavorite: isFavorite ?? contact.isFavorite,
+    );
+
+    contactsBox.put(id, updatedContact);
+  }
 }
