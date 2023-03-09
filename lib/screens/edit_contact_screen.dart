@@ -2,7 +2,6 @@ import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
 import 'package:contactbook/repository/contact_book.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../widgets.dart';
 
 class EditContactScreen extends StatefulWidget {
@@ -59,7 +58,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
               ),
               const Center(
                 child: Text(
-                  'Update Contact',
+                  'Edit Contact',
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -107,6 +106,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
                     phoneNumber: phoneNumberController.text,
                     isFavorite: false,
                   );
+                  Navigator.pop(context);
                   Navigator.pop(context);
                 },
                 child: const Text(
