@@ -1,6 +1,7 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_screen.dart';
+import 'package:contactbook/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
         children: const [
           ContactScreen(),
           AddNewContactScreen(),
+          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: GNav(
