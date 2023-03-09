@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import '../widgets.dart';
 
-class ContactInfoScreen extends StatelessWidget {
+class ContactInfoScreen extends StatefulWidget {
   static String id = 'info_screen';
   final Contact currentContact;
+
   const ContactInfoScreen({super.key, required this.currentContact});
 
+  @override
+  State<ContactInfoScreen> createState() => _ContactInfoScreenState();
+}
+
+class _ContactInfoScreenState extends State<ContactInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +30,7 @@ class ContactInfoScreen extends StatelessWidget {
               ),
               // ignore: prefer_const_constructors
               ProfilePicture(
-                name: currentContact.name,
+                name: widget.currentContact.name,
                 radius: 50,
                 fontsize: 30,
               ),
@@ -45,30 +51,34 @@ class ContactInfoScreen extends StatelessWidget {
                 height: 24,
               ),
               contactTile(
-                  info: currentContact.name, icon: const Icon(Icons.person)),
+                  info: widget.currentContact.name,
+                  icon: const Icon(Icons.person)),
               const SizedBox(
                 height: 8.0,
               ),
               contactTile(
-                  info: currentContact.age, icon: const Icon(Icons.numbers)),
+                  info: widget.currentContact.age,
+                  icon: const Icon(Icons.numbers)),
               const SizedBox(
                 height: 8.0,
               ),
               contactTile(
-                  info: currentContact.phoneNumber,
+                  info: widget.currentContact.phoneNumber,
                   icon: const Icon(Icons.phone)),
               const SizedBox(
                 height: 8.0,
               ),
               contactTile(
-                  info: currentContact.isFavorite
-                      ? 'Favorite Contact'
-                      : 'Non Favorite Contact',
-                  icon: Icon(
-                    Icons.favorite,
-                    color:
-                        currentContact.isFavorite ? Colors.red : Colors.white,
-                  )),
+                info: widget.currentContact.isFavorite
+                    ? 'Favorite Contact'
+                    : 'Non Favorite Contact',
+                icon: Icon(
+                  Icons.favorite,
+                  color: widget.currentContact.isFavorite
+                      ? Colors.red
+                      : Colors.white,
+                ),
+              ),
             ],
           ),
         ),
