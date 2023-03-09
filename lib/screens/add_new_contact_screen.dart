@@ -90,6 +90,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
               contactField(
                 controller: nameController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Name",
                 hintText: "Enter contact's name ...",
                 prefixIcon: const Icon(Icons.person),
               ),
@@ -99,6 +100,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
               contactField(
                 controller: ageController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Age",
                 hintText: "Enter contact's age ...",
                 prefixIcon: const Icon(Icons.numbers),
               ),
@@ -108,6 +110,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
               contactField(
                 controller: phoneNumberController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Phone Number",
                 hintText: "Enter contact's phone number ...",
                 prefixIcon: const Icon(Icons.phone),
               ),

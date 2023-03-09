@@ -62,6 +62,7 @@ Widget buildButton({
 TextField contactField({
   required TextEditingController controller,
   required InputDecoration decoration,
+  required String labelText,
   required String hintText,
   required Widget prefixIcon,
 }) =>
@@ -69,6 +70,10 @@ TextField contactField({
       cursorColor: kPrimaryColor,
       style: const TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
       decoration: kTextFieldDecoration.copyWith(
+        labelText: labelText,
+        labelStyle: const TextStyle(
+          color: kPrimaryColor,
+        ),
         hintText: hintText,
         prefixIcon: prefixIcon,
         prefixIconColor: kPrimaryColor,

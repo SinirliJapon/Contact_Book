@@ -72,6 +72,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
               contactField(
                 controller: nameController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Name",
                 hintText: "Update contact's name ...",
                 prefixIcon: const Icon(Icons.person),
               ),
@@ -81,6 +82,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
               contactField(
                 controller: ageController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Age",
                 hintText: "Update contact's age ...",
                 prefixIcon: const Icon(Icons.numbers),
               ),
@@ -90,6 +92,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
               contactField(
                 controller: phoneNumberController,
                 decoration: kTextFieldDecoration,
+                labelText: "Contact's Phone Number",
                 hintText: "Updata contact's phone number ...",
                 prefixIcon: const Icon(Icons.phone),
               ),
