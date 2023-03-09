@@ -1,5 +1,6 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/model/contact.dart';
+import 'package:contactbook/screens/edit_contact_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import '../widgets.dart';
@@ -15,10 +16,30 @@ class ContactInfoScreen extends StatefulWidget {
 }
 
 class _ContactInfoScreenState extends State<ContactInfoScreen> {
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditContactScreen(
+                    currentContact: widget.currentContact,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.edit),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Center(

@@ -11,7 +11,7 @@ class Contact {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final String name;
+  late final String name;
   @HiveField(2)
   final String age;
   @HiveField(3)
