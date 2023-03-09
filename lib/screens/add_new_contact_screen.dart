@@ -123,7 +123,7 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
                     phoneNumber: phoneNumberController.text,
                     isFavorite: false,
                   );
-                  Navigator.of(context).pop();
+                  FocusScope.of(context).unfocus();
                 },
                 child: const Text(
                   'Add Contact',
