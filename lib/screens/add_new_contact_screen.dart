@@ -126,6 +126,11 @@ class _AddNewContactScreenState extends State<AddNewContactScreen> {
                     phoneNumber: phoneNumberController.text,
                     isFavorite: false,
                   );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Contact Added..."),
+                    ),
+                  );
                   FocusScope.of(context).unfocus();
                 },
                 child: const Text(

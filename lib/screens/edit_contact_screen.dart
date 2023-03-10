@@ -109,6 +109,11 @@ class _EditContactScreenState extends State<EditContactScreen> {
                     phoneNumber: phoneNumberController.text,
                     isFavorite: false,
                   );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Contact Updated..."),
+                    ),
+                  );
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
