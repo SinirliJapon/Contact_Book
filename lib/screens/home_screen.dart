@@ -21,8 +21,8 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
       _pageController.animateToPage(
         index,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
+        duration: const Duration(milliseconds: 500),
+        curve: const Cubic(0.25, 0.1, 0.25, 1),
       );
     });
   }
