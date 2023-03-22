@@ -1,7 +1,6 @@
 import 'package:contactbook/constants.dart';
 import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_screen.dart';
-import 'package:contactbook/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
         children: const [
           ContactScreen(),
           AddNewContactScreen(),
-          SettingsScreen(),
         ],
       ),
       bottomNavigationBar: GNav(
@@ -54,16 +52,14 @@ class _HomePageState extends State<HomePage> {
         onTabChange: _onItemTapped,
         tabs: const [
           GButton(
+            margin: EdgeInsets.only(left: 20.0),
             icon: Icons.home,
             text: 'Home',
           ),
           GButton(
             icon: Icons.add,
             text: 'Add Contact',
-          ),
-          GButton(
-            icon: Icons.settings,
-            text: 'Settings',
+            margin: EdgeInsets.only(right: 20.0),
           ),
         ],
       ),
