@@ -7,12 +7,7 @@ class ContactBook extends ChangeNotifier {
   static Box<Contact> contactsBox = Hive.box<Contact>(contactBoxName);
   var uuid = const Uuid();
 
-  void add({
-    required String name,
-    required String age,
-    required String phoneNumber,
-    bool isFavorite = false,
-  }) {
+  void add({required String name, required String age, required String phoneNumber, bool isFavorite = false}) {
     var newId = uuid.v4();
     contactsBox.put(
         newId,
@@ -30,22 +25,14 @@ class ContactBook extends ChangeNotifier {
   }
 
   Future<void> update(Contact updatedContact) async {
-    final index = contactsBox.values
-        .toList()
-        .indexWhere((contact) => contact.id == updatedContact.id);
+    final index = contactsBox.values.toList().indexWhere((contact) => contact.id == updatedContact.id);
     if (index == -1) {
       throw Exception('Contact not found');
     }
     await contactsBox.putAt(index, updatedContact);
   }
 
-  void editContact({
-    required String id,
-    String? name,
-    String? age,
-    String? phoneNumber,
-    bool? isFavorite,
-  }) {
+  void editContact({required String id, String? name, String? age, String? phoneNumber, bool? isFavorite}) {
     final contact = contactsBox.get(id);
     if (contact == null) {
       throw Exception('Contact not found');
