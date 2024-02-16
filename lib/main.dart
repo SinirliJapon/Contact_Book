@@ -1,8 +1,6 @@
-import 'package:contactbook/constants.dart';
+import 'package:contactbook/utils/constants.dart';
 import 'package:contactbook/model/contact.dart';
-import 'package:contactbook/screens/add_new_contact_screen.dart';
 import 'package:contactbook/screens/contact_screen.dart';
-import 'package:contactbook/screens/home_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +10,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<Contact>(ContactAdapter());
   await Hive.openBox<Contact>(contactBoxName);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(const MyApp());
   });
 }
@@ -25,17 +22,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Contact Book',
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: kPrimaryColor,
+          foregroundColor: kForegroundColor,
         ),
       ),
-      home: const HomePage(),
-      routes: {
-        AddNewContactScreen.id: (context) => const AddNewContactScreen(),
-        ContactScreen.id: (context) => const ContactScreen(),
-      },
+      home: const ContactScreen(),
     );
   }
 }
